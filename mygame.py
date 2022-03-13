@@ -21,25 +21,28 @@ def insert(win, position):
     myfont = pygame.font.SysFont('arial', 34)
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                exit()
             if event.type == pygame.KEYDOWN:
-                if(grid_original[i-1][j-1] != 0):
-                    return
-                if(event.key == 48): #checking with 0
-                    grid[j][i] = event.key - 48
-                    pygame.draw.rect(win, background_color, (position[0]*50 + buffer, position[1]*50+ buffer,50 -2*buffer , 50 - 2*buffer))
-                    pygame.display.update()
-                    return
-                if(0 < event.key - 48 <10):  #We are checking for valid input
-                    pygame.draw.rect(win, background_color, (position[0]*50 + buffer+1, position[1]*50+ buffer,50 -2*buffer , 50 - 2*buffer))
-                    value = myfont.render(str(event.key-48), True, "red")
+                if possible(j,i,event.key-48):
+                    if(grid_original[i-1][j-1] != 0):
+                        return
                     
-                    
-                    win.blit(value, (position[0]*50 +18, position[1]*50+5))
-                    grid[j][i] = event.key - 48
-                    pygame.display.update()
-                    return
+                    if(event.key == 48): #checking with 0
+                        grid[j][i] = event.key - 48
+                        pygame.draw.rect(win, background_color, (position[0]*50 + buffer, position[1]*50+ buffer,50 -2*buffer , 50 - 2*buffer))
+                        pygame.display.update()
+                        return
+                    if(0 < event.key - 48 <10):  #We are checking for valid input
+                        pygame.draw.rect(win, background_color, (position[0]*50 + buffer+1, position[1]*50+ buffer,50 -2*buffer , 50 - 2*buffer))
+                        value = myfont.render(str(event.key-48), True, "red")
+                        
+                        
+                        win.blit(value, (position[0]*50 +18, position[1]*50+5))
+                        grid[j][i] = event.key - 48
+                        pygame.display.update()
+                        return
                 return
 
 def possible(y,x,n):
